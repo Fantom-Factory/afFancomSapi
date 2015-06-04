@@ -1,0 +1,116 @@
+Overview [#overview]
+*******************
+
+Fancom Sapi is a complete collection of classes that wrap [Microsoft Speech API (SAPI)
+5.4]`http://msdn.microsoft.com/en-us/library/ee125186%28v=vs.85%29.aspx` when running Fantom on a
+JVM.
+
+
+Speech [#speech]
+****************
+Making your computer speak couldn't be simpler than:
+
+  SpVoice().speak("It's time to kick ass 'n' chew bubble gum!")
+
+A more complete example that initialises proper COM threading, lists available voices, and speaks
+in the background is:
+
+pre>
+  static Void main(Str[] args) {
+    afFancom::ComThread.initSta
+
+    spVoice := afFancomSapi::SpVoice()
+
+    Obj.echo("Available voices:")
+    spVoice.getVoices.each {
+      Obj.echo(" - ${it->getDescription}")
+    }
+
+    name := spVoice.voice.getDescription.split('-')[0]
+    spVoice.speak("Hello, I'm $name", SpeechVoiceSpeakFlags.SVSFlagsAsync)
+
+    concurrent::Actor.sleep(3sec)
+
+    afFancom::ComThread.release
+  }
+<pre
+
+
+Speech Recognition [#speechRecognition]
+***************************************
+Speech recognition is a bit more involved as you need to initialise an input stream, register some
+grammar to listen for and set up an event sink to recieve callbacks. Never the less, a complete
+example is given below:
+
+pre>
+using gfx
+using fwt
+using afFancom
+using afFancomSapi
+
+class SpeechRecognition {
+
+  static Void main(Str[] args) {
+    ComThread.initSta
+
+    recoCtx  := SpInProcRecoContext()
+
+    // initialise the input stream / microphone
+    // not needed with an SpSharedRecoContext
+    category := SpObjectTokenCategory()
+    category.setId(SpeechStringConstants.SpeechCategoryAudioIn)
+    token := SpObjectToken()
+    token.setId(category.default_)
+    recoCtx.recognizer.audioInput = token
+
+    // register some commands to listen for
+    grammar  := recoCtx.createGrammar
+    rule   := grammar.rules.add("awesome", SpeechRuleAttributes.SRATopLevel)
+    rule.initialState.addWordTransition(null, "Kick Ass")
+    rule.initialState.addWordTransition(null, "Chew Bubblegum")
+    grammar.rules.commit
+    grammar.cmdSetRuleState("awesome", SpeechRuleState.SGDSActive)
+
+    // register an event sink
+    recoCtx.withEvents(SpeechRecognition())
+
+    window := Window {
+      it.size = Size(320, 240)
+      it.title = "Say Kick Ass!"
+    }.open
+
+    ComThread.release
+  }
+
+  Void onRecognition(Int streamNumber, Variant streamPosition, SpeechRecognitionType recognitionType, ISpeechRecoResult result) {
+    utterance := result.phraseInfo.getText.capitalize
+    if (utterance.contains("gum"))
+      Obj.echo("Chewing gum.")
+    else
+      Obj.echo("Hur hur, you said, 'Ass'!!!")
+  }
+}
+<pre
+
+See [ISpeechRecoContext (Events)]`http://msdn.microsoft.com/en-us/library/ee125411(v=vs.85).aspx`
+for a list of possible callback events.
+
+
+Release Notes [#releaseNotes]
+*****************************
+
+v1.0.4 [#v1.0.4]
+----------------
+- Example src code is now bundled with the Pod, see
+  - `fan://afFancomSapi/doc/examples/Speech.fan` &
+  - `fan://afFancomSapi/doc/examples/SpeechRecognition.fan`
+- Fixed error in Speech Recognition example
+
+v1.0.2 [#v1.0.2]
+----------------
+- Enums with values were not auto-generated with a Variant surrogate 'fromVariant()' static factory
+  method
+
+v1.0.0 [#v1.0.0]
+----------------
+- Initial release
