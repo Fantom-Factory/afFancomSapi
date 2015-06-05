@@ -1,24 +1,36 @@
-Overview
-********
+#Fancom SAPI v1.0.4
+---
+[![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](http://fantom.org/)
+[![pod: v1.0.4](http://img.shields.io/badge/pod-v1.0.4-yellow.svg)](http://www.fantomfactory.org/pods/afFancomSapi)
+![Licence: MIT](http://img.shields.io/badge/licence-MIT-blue.svg)
 
-Fancom Sapi is a complete collection of classes that wrap [Microsoft Speech API (SAPI)
-5.4]`http://msdn.microsoft.com/en-us/library/ee125186%28v=vs.85%29.aspx` when running Fantom on a
-JVM.
+## Overview
 
+Fancom Sapi is a complete collection of classes that wrap [Microsoft Speech API (SAPI) 5.4](http://msdn.microsoft.com/en-us/library/ee125186%28v=vs.85%29.aspx) when running Fantom on a JVM.
 
-Speech
-******
+## Install
+
+Install `Fancom SAPI` with the Fantom Repository Manager ( [fanr](http://fantom.org/doc/docFanr/Tool.html#install) ):
+
+    C:\> fanr install -r http://repo.status302.com/fanr/ afFancomSapi
+
+To use in a [Fantom](http://fantom.org/) project, add a dependency to `build.fan`:
+
+    depends = ["sys 1.0", ..., "afFancomSapi 1.0"]
+
+## Documentation
+
+Full API & fandocs are available on the [Fantom Pod Repository](http://pods.fantomfactory.org/pods/afFancomSapi/).
+
+## Speech
+
 Making your computer speak couldn't be simpler than:
 
-  syntax: fantom
-  SpVoice().speak("It's time to kick ass 'n' chew bubble gum!")
+    SpVoice().speak("It's time to kick ass 'n' chew bubble gum!")
 
-A more complete example that initialises proper COM threading, lists available voices, and speaks
-in the background is:
+A more complete example that initialises proper COM threading, lists available voices, and speaks in the background is:
 
-pre>
-syntax: fantom
-
+```
 static Void main(Str[] args) {
     afFancom::ComThread.initSta
 
@@ -36,18 +48,13 @@ static Void main(Str[] args) {
 
     afFancom::ComThread.release
 }
-<pre
+```
 
+## Speech Recognition
 
-Speech Recognition
-******************
-Speech recognition is a bit more involved as you need to initialise an input stream, register some
-grammar to listen for and set up an event sink to recieve callbacks. Never the less, a complete
-example is given below:
+Speech recognition is a bit more involved as you need to initialise an input stream, register some grammar to listen for and set up an event sink to recieve callbacks. Never the less, a complete example is given below:
 
-pre>
-syntax: fantom
-
+```
 using gfx
 using fwt
 using afFancom
@@ -95,8 +102,7 @@ class SpeechRecognition {
             Obj.echo("Hur hur, you said, 'Ass'!!!")
     }
 }
-<pre
+```
 
-See [ISpeechRecoContext (Events)]`http://msdn.microsoft.com/en-us/library/ee125411(v=vs.85).aspx`
-for a list of possible callback events.
+See [ISpeechRecoContext (Events)](http://msdn.microsoft.com/en-us/library/ee125411(v=vs.85).aspx) for a list of possible callback events.
 
