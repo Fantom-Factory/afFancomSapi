@@ -110,7 +110,7 @@ class ISpeechPhraseInfo {
 	** The SaveToMemory method saves the phrase information from a recognition result to memory.
 	** 
 	** The phrase may be recalled at a later time. To retrieve the phrase information from memory 
-	** use `SpPhraseInfoBuilder#RestorePhraseFromMemory`.
+	** use `SpPhraseInfoBuilder.restorePhraseFromMemory`.
 	Variant saveToMemory() {
 		dispatch.call("SaveToMemory")
 	}

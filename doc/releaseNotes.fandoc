@@ -1,0 +1,18 @@
+Versions
+********
+
+v1.0.4
+------
+- Example src code is now bundled with the Pod, see
+  - `fan://afFancomSapi/doc/examples/Speech.fan` &
+  - `fan://afFancomSapi/doc/examples/SpeechRecognition.fan`
+- Fixed error in Speech Recognition example
+
+v1.0.2
+------
+- Enums with values were not auto-generated with a Variant surrogate 'fromVariant()' static factory
+  method
+
+v1.0.0
+------
+- Initial release
