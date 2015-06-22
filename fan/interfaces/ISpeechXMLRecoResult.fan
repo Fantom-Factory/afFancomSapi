@@ -16,7 +16,7 @@ class ISpeechXMLRecoResult {
 
 	// ---- Properties ----------------------------------------------------------------------------
 
-	** ** Gets or sets the audio stream format.
+	** Gets or sets the audio stream format.
 	SpAudioFormat? audioFormat {
 		get { dispatch.getProperty("AudioFormat").asType(SpAudioFormat#) }
 		set { dispatch.setProperty("AudioFormat", it) }

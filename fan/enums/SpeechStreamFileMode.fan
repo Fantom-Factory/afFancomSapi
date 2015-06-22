@@ -9,12 +9,12 @@ enum class SpeechStreamFileMode {
 	** Value is 0 (0x0)
 	SSFMOpenForRead,
 
-	** [hidden] Opens an existing file as read-write. Not supported for wav files.
+	** *hidden* - Opens an existing file as read-write. Not supported for wav files.
 	** 
 	** Value is 1 (0x1)
 	SSFMOpenReadWrite,
 
-	** [hidden] Opens an existing file as read-write. Else, it creates the file then opens it as 
+	** *hidden* - Opens an existing file as read-write. Else, it creates the file then opens it as 
 	** read-write. Not supported for wav files.
 	** 
 	** Value is 2 (0x2)
