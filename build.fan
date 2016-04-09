@@ -18,7 +18,7 @@ class Build : BuildPod {
 			"afFancom 1.0.4 - 1.0"
 		]
 
-		srcDirs = [`fan/`, `fan/interfaces/`, `fan/enums/`, `fan/classes/`]
+		srcDirs = [`fan/`, `fan/classes/`, `fan/enums/`, `fan/interfaces/`]
 		resDirs	= [`doc/`, `doc/examples/`]
 	}
 }
